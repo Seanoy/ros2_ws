@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(cpp_pubsub)
+project(cpp_parameters)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -8,19 +8,19 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
-find_package(std_msgs REQUIRED)
-find_package(tutorial_interfaces REQUIRED)                      # CHANGE
 
-add_executable(talker src/publisher_lambda_function.cpp)
-add_executable(listener src/subscriber_lambda_function.cpp)
-
-target_link_libraries(talker PUBLIC rclcpp::rclcpp ${tutorial_interfaces_TARGETS})
-target_link_libraries(listener PUBLIC rclcpp::rclcpp ${tutorial_interfaces_TARGETS})
+add_executable(minimal_param_node src/cpp_parameters_node.cpp)
+target_link_libraries(minimal_param_node rclcpp::rclcpp)
 
 install(TARGETS
-  talker
-  listener
-  DESTINATION lib/${PROJECT_NAME})
+    minimal_param_node
+  DESTINATION lib/${PROJECT_NAME}
+)
+install(
+  DIRECTORY launch
+  DESTINATION share/${PROJECT_NAME}
+)
+
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights

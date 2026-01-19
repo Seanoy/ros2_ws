@@ -9,14 +9,21 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(example_interfaces REQUIRED)
+find_package(tutorial_interfaces REQUIRED)         # CHANGE
 
 add_executable(server src/add_two_ints_server.cpp)
 add_executable(client src/add_two_ints_client.cpp)
 target_link_libraries(server PUBLIC rclcpp::rclcpp ${example_interfaces_TARGETS})
 target_link_libraries(client PUBLIC rclcpp::rclcpp ${example_interfaces_TARGETS})
+add_executable(server3 src/add_three_ints_server.cpp)
+add_executable(client3 src/add_three_ints_client.cpp)
+target_link_libraries(server3 PUBLIC rclcpp::rclcpp ${tutorial_interfaces_TARGETS})
+target_link_libraries(client3 PUBLIC rclcpp::rclcpp ${tutorial_interfaces_TARGETS})
 install(TARGETS
   server
   client
+  server3
+  client3
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
